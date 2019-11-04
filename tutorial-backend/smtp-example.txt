@@ -1,0 +1,107 @@
+
+SMTP Protocol
+
+=== c -> s (Connect)
+
+** connect
+
+=== s -> c (Willommensnachricht vom Server)
+
+220 us11-010mrc - SMTP ready
+
+=== c -> s (HELO oder EHLO/Extended HELO)
+
+HELO
+ (oder)
+EHLO (vllt irgendeinen Namen hier als Parameter?)
+
+=== s -> c (Wenn EHLO: Extension Liste)
+
+250-us11-010mrc.dh.atmailcloud.com Hello example [101.165.155.220]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250-AUTH LOGIN PLAIN
+250-CHUNKING
+250-STARTTLS
+250 HELP
+
+=== c -> s (TLS starten! An Unterschied zu SSL denken, SSL ist bereits gestartet, der Socket läuft darüber)
+
+STARTTLS
+
+=== s -> c (TLS ack)
+
+220 TLS go ahead
+
+=== s
+
+** connection switches to binary after executing STARTTLS
+
+=== c -> s (Noch ein EHLO wird benötigt!)
+
+EHLO example
+
+=== s -> c (Extended HELO response, dieses mal *ohne* STARTTLS)
+
+250-us11-011mrc.dh.atmailcloud.com Hello o [101.165.155.220]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250-AUTH LOGIN PLAIN
+250-CHUNKING
+250 HELP
+
+=== c -> s (Authentication)
+
+AUTH LOGIN
+
+=== s -> c ("Username:" in base64)
+
+334 VXNlcm5hbWU6
+
+=== c -> s (Base64 encoded username)
+
+c29tZXVzZXJAZXhhbXBsZS5hdG1haWxjbG91ZC5jb20=
+
+=== s -> c
+
+334 UGFzc3dvcmQ6
+
+=== c -> s (Base64 encoded password)
+
+bXleUGFzc3cwcmQ=
+
+=== s -> c (Auth success)
+
+235 Authentication succeeded
+
+=== c -> s (Mail from um Nachricht senden zu starten)
+
+MAIL FROM: someuser@example.atmailcloud.com
+
+=== s -> c (ack)
+
+250 OK
+
+=== c -> s (Rcpt to um senden anzugeben)
+
+RCPT TO: someotheruser@example.atmailcloud.com
+
+=== s -> c (ack)
+
+250 Accepted Recipient
+
+=== c -> s (noch ein rcpt)
+RCPT TO: myfriend@gmail.com
+250 Accepted Recipient
+DATA
+354 Enter message, ending with "." on a line by itself
+From: Some User <someuser@example.atmailcloud.com>
+To: Some Other User <someotheruser@example.atmailcloud.com>
+Cc: myfriend@gmail.com
+Subject: Hello
+
+Hello my friends.
+.
+250 OK id=1g040I-0008DT-GG
