@@ -18,7 +18,13 @@ public class AccountManager {
 	 * @param name identifier for this account
 	 * @return the created account or null if an error occured, most likely an invalid or already existing name
 	 */
-	public Optional<TutorialAccount> registerAccount(String name) {
+	public Optional<TutorialAccount> registerAccount(String name, boolean forceAuth) {
+		if(lookupAccount(name).isPresent() && forceAuth) {
+			TutorialBackend.LOGGER.info("Force auth'd into " + name);
+
+			return lookupAccount(name);
+		}
+
 		if(name == null || lookupAccount(name).isPresent()) {
 			return Optional.empty();
 		}

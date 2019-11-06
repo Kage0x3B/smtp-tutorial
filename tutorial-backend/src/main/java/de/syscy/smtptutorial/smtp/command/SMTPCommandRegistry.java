@@ -29,6 +29,9 @@ public class SMTPCommandRegistry {
 		register(new ResetCommand());
 		register(new QuitCommand());
 		register(new NoopCommand());
+
+		//Secret commands for testing
+		register(new RestartCommand());
 	}
 
 	private static void register(SMTPCommand command) {

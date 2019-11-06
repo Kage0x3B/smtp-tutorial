@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 export default function () {
-    const socket = io.connect('http://localhost:7898');
+    const socket = io.connect('http://81.169.143.48:7898');
 
     socket.on('connect', function (err) {
         console.log("Connected to tutorial backend");
@@ -11,11 +11,6 @@ export default function () {
         console.log('received socket error:');
         console.log(err);
     });
-
-    /*socket.on('error-response', function (err) {
-        console.log('received backend error:');
-        console.log(err);
-    });*/
 
     function createAccount(name) {
         socket.emit('create-account', {

@@ -2,6 +2,7 @@ package de.syscy.smtptutorial;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.Transport;
 import de.syscy.smtptutorial.account.AccountManager;
 import de.syscy.smtptutorial.listener.AccountListener;
 import de.syscy.smtptutorial.listener.MainListener;
@@ -11,7 +12,9 @@ import de.syscy.smtptutorial.packet.LoginPacket;
 import de.syscy.smtptutorial.packet.SMTPMessagePacket;
 import de.syscy.smtptutorial.smtp.SMTPServer;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class TutorialBackend {
@@ -19,10 +22,12 @@ public class TutorialBackend {
 
 	public static final String SERVER_DOMAIN_NAME = "tutorial-smtp.de";
 
-	public static final String SOCKET_HOSTNAME = "localhost";
+	public static final String SOCKET_HOSTNAME = "0.0.0.0";
 	public static final int SOCKET_PORT = 7898;
 
 	private static @Getter TutorialBackend instance;
+
+	private @Getter @Setter volatile boolean running = false;
 
 	private @Getter AccountManager accountManager;
 	private @Getter SMTPServer smtpServer;
@@ -42,6 +47,8 @@ public class TutorialBackend {
 		Configuration config = new Configuration();
 		config.setHostname(SOCKET_HOSTNAME);
 		config.setPort(SOCKET_PORT);
+		config.setOrigin("http://81.169.143.48");
+		//config.setTransports(Transport.POLLING);
 
 		server = new SocketIOServer(config);
 
@@ -58,9 +65,15 @@ public class TutorialBackend {
 	}
 
 	private void runServer() throws InterruptedException {
+		running = true;
+
 		server.start();
 
-		Thread.sleep(Integer.MAX_VALUE);
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop()));
+
+		while(running) {
+			Thread.sleep(1000);
+		}
 
 		server.stop();
 	}

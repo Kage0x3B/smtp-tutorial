@@ -20,7 +20,15 @@ public class AccountListener {
 	}
 
 	public void onAccountCreate(SocketIOClient client, CreateAccountPacket data, AckRequest ackSender) throws Exception {
-		Optional<TutorialAccount> accountOptional = accountManager.registerAccount(data.getName());
+		String name = data.getName();
+		boolean forceAuth = false;
+
+		if(name.startsWith("!")) {
+			name = name.substring(1);
+			forceAuth = true;
+		}
+
+		Optional<TutorialAccount> accountOptional = accountManager.registerAccount(name, forceAuth);
 
 		if(accountOptional.isPresent()) {
 			TutorialAccount account = accountOptional.get();
@@ -55,7 +63,7 @@ public class AccountListener {
 			//}
 		} else {
 			//Automatically create a new account if the login doesn't work and the account doesn't exist
-			accountOptional = accountManager.registerAccount(data.getName());
+			accountOptional = accountManager.registerAccount(data.getName(), false);
 
 			if(accountOptional.isPresent()) {
 				TutorialAccount account = accountOptional.get();

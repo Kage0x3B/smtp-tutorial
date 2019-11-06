@@ -19,7 +19,19 @@ public class ListUsersCommand extends SMTPCommand {
 	public SMTPResponse execute(SMTPSession session, String parameter) {
 		List<String> responseLines = new LinkedList<>();
 
-		TutorialBackend.getInstance().getAccountManager().getAllAccounts().stream().map(TutorialAccount::getName).forEach(responseLines::add);
+		for(TutorialAccount a : TutorialBackend.getInstance().getAccountManager().getAllAccounts()) {
+			if(session.getAccount().isAdmin() && parameter.trim().equalsIgnoreCase("l")) {
+				SMTPSession accSession = TutorialBackend.getInstance().getSmtpServer().getSession(a);
+
+				StringBuilder responseBuilder = new StringBuilder(a.getName());
+				responseBuilder.append(" (state: ").append(accSession.getState().getName());
+				responseBuilder.append("; auth: ").append(accSession.isAuthenticated());
+				responseBuilder.append("; enc: ").append(accSession.isEncrypted()).append(")");
+				responseLines.add(responseBuilder.toString());
+			} else {
+				responseLines.add(a.getName());
+			}
+		}
 
 		return SMTPResponse.ok(responseLines.toArray(new String[0]));
 	}

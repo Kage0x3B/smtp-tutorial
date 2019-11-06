@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React from 'react';
 import styled from 'styled-components'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -94,7 +94,8 @@ export default class MessageList extends React.Component {
                         }
                     </List>
                 </Scrollable>
-                <MailDialog open={this.state.mailDialogOpen} mail={this.state.openedMail} onClose={this.closeMailDialog}/>
+                <MailDialog open={this.state.mailDialogOpen} mail={this.state.openedMail}
+                            onClose={this.closeMailDialog}/>
             </div>
         )
     }
