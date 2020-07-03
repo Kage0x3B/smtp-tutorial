@@ -22,7 +22,7 @@ public class TutorialBackend {
 
 	public static final String SERVER_DOMAIN_NAME = "smtp-tutorial.syscy.de";
 
-	public static final String SOCKET_HOSTNAME = "0.0.0.0";
+	public static final String SOCKET_HOSTNAME = "127.0.0.1";
 	public static final int SOCKET_PORT = 7898;
 
 	private static @Getter TutorialBackend instance;
