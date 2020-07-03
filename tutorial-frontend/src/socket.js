@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 export default function () {
-    const socket = io.connect('http://81.169.143.48:7898');
+    const socket = io.connect('https://smtp-tutorial.syscy.de/ws');
 
     socket.on('connect', function (err) {
         console.log("Connected to tutorial backend");
