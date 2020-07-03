@@ -17,6 +17,6 @@ public class StartTLSCommand extends SMTPCommand {
 
 		session.setEncrypted(true);
 
-		return SMTPResponse.create(StatusCode.STATUS_220, "Ready to start TLS", "(A normal server would now negotiate TLS and the connection is protected by TLS", "for every following command but this isn't support by this tutorial server)");
+		return SMTPResponse.create(StatusCode.STATUS_220, "Ready to start TLS", "(A normal server would now negotiate TLS and the connection is protected by TLS", "for every following command but this isn't supported by this tutorial server)");
 	}
 }
