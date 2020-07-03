@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class TutorialBackend {
 	public static Logger LOGGER;
 
-	public static final String SERVER_DOMAIN_NAME = "tutorial-smtp.de";
+	public static final String SERVER_DOMAIN_NAME = "smtp-tutorial.syscy.de";
 
 	public static final String SOCKET_HOSTNAME = "0.0.0.0";
 	public static final int SOCKET_PORT = 7898;
@@ -47,7 +47,6 @@ public class TutorialBackend {
 		Configuration config = new Configuration();
 		config.setHostname(SOCKET_HOSTNAME);
 		config.setPort(SOCKET_PORT);
-		config.setOrigin("http://81.169.143.48");
 		//config.setTransports(Transport.POLLING);
 
 		server = new SocketIOServer(config);
