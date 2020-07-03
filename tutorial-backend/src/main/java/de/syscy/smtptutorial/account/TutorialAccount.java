@@ -1,6 +1,7 @@
 package de.syscy.smtptutorial.account;
 
 import com.corundumstudio.socketio.SocketIOClient;
+import de.syscy.smtptutorial.TutorialBackend;
 import de.syscy.smtptutorial.packet.ReceivedMailPacket;
 import lombok.Data;
 
@@ -23,9 +24,9 @@ public class TutorialAccount {
 		this.admin = admin;
 
 		String sender = "moritz@smtp-tutorial.de";
-		List<String> receiver = Collections.singletonList(name + "@smtp-tutorial.de");
+		List<String> receiver = Collections.singletonList(name + "@" + TutorialBackend.SERVER_DOMAIN_NAME);
 
-		String data = "From: Moritz Hein <moritz@smtp-tutorial.de>\n" + "To: " + name + " <" + name + "@smtp-tutorial.de>\n" + "Subject: Willkommen zum SMTP Tutorial\n" + "\n" + "Hi " + name + "!\n" + "Willkommen zu meinem interaktiven SMTP Tutorial.\n" + "Hiermit kannst du, während du meiner Erklärung zum SMTP Protokoll folgst, direkt alles gelernte ausprobieren\n" + "und allen anderen aus dem Kurs Mails schreiben.\n" + "Bei Fragen kannst du immer das HELP Kommando benutzen und sonst mich fragen!\n" + "\n" + "LG Moritz";
+		String data = "From: Moritz Hein <moritz@" + TutorialBackend.SERVER_DOMAIN_NAME + ">\n" + "To: " + name + " <" + name + "@" + TutorialBackend.SERVER_DOMAIN_NAME + ">\n" + "Subject: Willkommen zum SMTP Tutorial\n" + "\n" + "Hi " + name + "!\n" + "Willkommen zu meinem interaktiven SMTP Tutorial.\n" + "Hiermit kannst du, während du meiner Erklärung zum SMTP Protokoll folgst, direkt alles gelernte ausprobieren\n" + "und allen anderen aus dem Kurs Mails schreiben.\n" + "Bei Fragen kannst du immer das HELP Kommando benutzen und sonst mich fragen!\n" + "\n" + "LG Moritz";
 
 		MailData welcomeMail = new MailData(sender, receiver, data);
 		receiveMail(welcomeMail);
