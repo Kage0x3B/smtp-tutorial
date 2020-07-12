@@ -2,9 +2,7 @@
 
 I've programmed this interactive tutorial for a presentation I had to hold in my highschool computer science course on how the SMTP protocol works.
 
-To make the presentation more interesting, instead of just reading through a list of commands and explaining them,
-I thought it would be more interesting to test them out directly by having a basic SMTP server and a console where you can enter SMTP commands and
-send mails to your classmates.
+Instead of just reading through a list of commands and explaining them, I thought it would be more interesting to test them out directly by having a basic SMTP server and a console where you can enter SMTP commands and send mails to your classmates.
 
 It did work pretty well with the presentation as a further explanation for some commands and the web app is still online to play around with at
 [smtp-tutorial.syscy.de](https://smtp-tutorial.syscy.de).
